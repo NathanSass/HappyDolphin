@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HappyDolphin</string>
+    <string name="title_activity_image_stream">ImageStream</string>
+    <string name="login_error">login failed</string>
 </resources>
