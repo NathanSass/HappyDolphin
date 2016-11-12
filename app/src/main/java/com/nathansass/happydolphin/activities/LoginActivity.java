@@ -1,8 +1,10 @@
 package com.nathansass.happydolphin.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,10 +12,10 @@ import android.widget.Toast;
 
 import com.nathansass.happydolphin.R;
 
-import java.util.concurrent.Callable;
-
 public class LoginActivity extends AppCompatActivity {
     Button btnSignIn;
+    SharedPreferences pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,26 +53,26 @@ public class LoginActivity extends AppCompatActivity {
         if(data != null && data.getScheme().equals("https") && data.getFragment() != null) {
             final String accessToken = data.getFragment().replaceFirst("access_token=", "");
             if (accessToken != null) {
-                handleSignInResult(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        // Do nothing, just throw the access token away.
-                        return null;
-                    }
-                });
+                handleSignInResult(accessToken);
             } else {
                 handleSignInResult(null);
             }
         }
     }
 
-    private void handleSignInResult(Callable<Void> logout) {
-        if(logout == null) {
+    private void handleSignInResult(String accessToken) {
+        if(accessToken == null) {
             /* Login error */
             Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
         } else {
             /* Login success */
-            startActivity(new Intent(this, ImageStreamActivity.class));
+            pref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString(R.string.access_token + "", accessToken);
+            edit.commit();
+
+            Intent i = new Intent(this, ImageStreamActivity.class);
+            startActivity(i);
         }
     }
 
