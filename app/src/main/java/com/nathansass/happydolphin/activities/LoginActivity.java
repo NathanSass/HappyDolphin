@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
                 signInWithInstagram();
             }
         });
-
     }
 
     private void signInWithInstagram() {
