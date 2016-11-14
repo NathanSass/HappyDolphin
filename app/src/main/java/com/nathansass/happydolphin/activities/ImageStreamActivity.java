@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import com.nathansass.happydolphin.R;
 import com.nathansass.happydolphin.adapters.PostsAdapter;
 import com.nathansass.happydolphin.models.IGPost;
-import com.nathansass.happydolphin.network.ImageSearchGateway;
+import com.nathansass.happydolphin.network.InstagramGateway;
 
 import org.json.JSONObject;
 
@@ -34,7 +34,8 @@ public class ImageStreamActivity extends AppCompatActivity {
 
     public void getIGPostData() {
         accessToken = getAccessToken();
-        ImageSearchGateway.getRoute("blah", accessToken, new ImageSearchGateway.ImageSearchListener() {
+
+        InstagramGateway.getMediaRoute(accessToken, new InstagramGateway.ImageSearchListener() {
             @Override
             public void done(JSONObject response) {
                 int curSize = igPosts.size();
@@ -53,11 +54,11 @@ public class ImageStreamActivity extends AppCompatActivity {
         rvImageStream.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private String getAccessToken() {
+    public String getAccessToken() {
         SharedPreferences pref =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        String username = pref.getString(R.string.access_token + "", "n/a");
-        return username;
+        String accessToken = pref.getString(R.string.access_token + "", "n/a");
+        return accessToken;
     }
 
 }
