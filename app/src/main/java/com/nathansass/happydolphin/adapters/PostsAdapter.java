@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nathansass.happydolphin.R;
 import com.nathansass.happydolphin.models.IGPost;
+import com.nathansass.happydolphin.util.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,6 +25,10 @@ public class PostsAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView ivPostImage;
+        public ImageView ivProfileImage;
+        public TextView tvProfileName;
+        public TextView tvLikeCount;
+
 
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
@@ -30,11 +36,11 @@ public class PostsAdapter extends
             super(itemView);
 
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
+            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
+            tvProfileName = (TextView) itemView.findViewById(R.id.tvProfileName);
+            tvLikeCount = (TextView) itemView.findViewById(R.id.tvLikeCount);
         }
-
     }
-
-
 
     private List<IGPost> igPosts;
     private Context context;
@@ -66,11 +72,21 @@ public class PostsAdapter extends
     public void onBindViewHolder(ViewHolder holder, int position) {
         IGPost igPost = igPosts.get(position);
         ImageView ivPostImage = holder.ivPostImage;
+        ImageView ivProfileImage = holder.ivProfileImage;
 
-        // Set item views based on your views and data model
-       // Picasso things
-        Picasso.with(getContext()).load(igPost.url).into(ivPostImage);
+        TextView tvProfileName = holder.tvProfileName;
+        tvProfileName.setText(igPost.username);
 
+        TextView tvLikeCount = holder.tvLikeCount;
+        tvLikeCount.setText(igPost.likeCount + "");
+
+        Picasso.with(getContext()).load(igPost.url)
+                .placeholder(R.drawable.placeholder)
+                .into(ivPostImage);
+
+        Picasso.with(getContext()).load(igPost.profileUrl)
+                .transform(new CircleTransform())
+                .into(ivProfileImage);
     }
 
     @Override

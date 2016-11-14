@@ -3,4 +3,8 @@
     <string name="title_activity_image_stream">ImageStream</string>
     <string name="login_error">login failed</string>
     <string name="access_token">access_token</string>
+
+    <string name="defaultUsername">dolphiner711</string>
+    <string name="defaultLikeCount">3</string>
+    <string name="likes">Likes</string>
 </resources>
