@@ -1,27 +1,44 @@
 package com.nathansass.happydolphin.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-
-public class IGPost {
+@Table(name = "IGPost")
+public class IGPost extends Model{
+    @Column(name = "Url")
     public String url;
-    public String id;
+    @Column(name = "PostId", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public String postId;
+    @Column(name = "Username")
     public String username;
+    @Column(name = "ProfileUrl")
     public String profileUrl;
+    @Column(name = "LikeCount")
     public int likeCount;
+    @Column(name = "UserHasLiked")
     public boolean userHasLiked;
 
-    public IGPost(String url, String id, String username, String profileUrl, int likeCount, boolean userHasLiked) {
+    public IGPost(String url, String postId, String username, String profileUrl, int likeCount, boolean userHasLiked) {
+        super();
         this.url = url;
-        this.id = id;
+        this.postId = postId;
         this.username = username;
         this.profileUrl = profileUrl;
         this.likeCount = likeCount;
-        this.userHasLiked = false;
+        this.userHasLiked = userHasLiked;
+    }
+
+    public IGPost() {
+        super();
     }
 
     public static ArrayList<IGPost> fromJSON(JSONObject response){
@@ -41,11 +58,21 @@ public class IGPost {
                 JSONObject likesJSON = (JSONObject) postJSON.get("likes");
                 int likesCount = likesJSON.getInt("count");
 
-                igPosts.add(new IGPost(url, id, username, profileUrl, likesCount, userHasLiked));
+                IGPost igPost = new IGPost(url, id, username, profileUrl, likesCount, userHasLiked);
+                igPost.save();
+                igPosts.add(igPost);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return igPosts;
+    }
+
+    public static List<IGPost> getAll() { //should only query fresh items,
+        return new Select()
+                .from(IGPost.class)
+                .limit(10)
+                .execute();
+
     }
 }

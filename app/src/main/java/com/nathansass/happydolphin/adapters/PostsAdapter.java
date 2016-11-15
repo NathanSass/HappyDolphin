@@ -2,7 +2,9 @@ package com.nathansass.happydolphin.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,15 +61,19 @@ public class PostsAdapter extends
                         PreferenceManager.getDefaultSharedPreferences(getContext()); //TODO: put this in a shared function
                 String accessToken = pref.getString(R.string.access_token + "", "n/a");
 
+                Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(75);
+
                 if (igPost.userHasLiked) {
                     igPost.userHasLiked = false;
                     igPost.likeCount -= 1;
-                    InstagramGateway.unlikeMediaRoute(getContext(), igPost.id, accessToken);
+                    InstagramGateway.unlikeMediaRoute(getContext(), igPost.postId, accessToken);
                 } else {
                     igPost.userHasLiked = true;
                     igPost.likeCount += 1;
-                    InstagramGateway.likeMediaRoute(getContext(), igPost.id, accessToken);
+                    InstagramGateway.likeMediaRoute(getContext(), igPost.postId, accessToken);
                 }
+                igPost.save();
                 notifyItemChanged(position);
             }
         }
@@ -116,9 +122,9 @@ public class PostsAdapter extends
         tvLikeCount.setText(igPost.likeCount + "");
 
         if(igPost.userHasLiked) {
-            ivLikeIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_heart_fill));
+            ivLikeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_heart_fill));
         } else {
-            ivLikeIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_heart_stroke));
+            ivLikeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_heart_stroke));
         }
 
         Picasso.with(getContext()).load(igPost.url)
