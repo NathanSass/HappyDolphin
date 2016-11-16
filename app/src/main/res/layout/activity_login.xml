@@ -9,11 +9,24 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/launch_background"
     tools:context="com.nathansass.happydolphin.activities.LoginActivity">
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SignIn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/opaqueButtonBackground"
+        android:text="@string/sign_in"
+        android:textColor="@color/white"
         android:id="@+id/btnSignIn" />
+    <ImageView
+        android:id="@+id/ivHappyDolphinIcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSignIn"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:src="@drawable/happy_dolphin_white"/>
 </RelativeLayout>
