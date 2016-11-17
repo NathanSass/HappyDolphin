@@ -2,7 +2,6 @@ package com.nathansass.happydolphin.network;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -36,7 +35,7 @@ public class InstagramGateway {
         });
     }
 
-    // BUGBUG: currently don't have support for this
+    // BUGBUG: currently don't have support for this with API Permissions
     public static void likeMediaRoute(final Context context, String mediaID, String accessToken) {
         String baseUrl = "https://api.instagram.com/v1/media/" +  mediaID + "/likes";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -54,12 +53,12 @@ public class InstagramGateway {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(context, "Failure: No Communication With Database", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Failure: No Communication With Database", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // BUGBUG: currently no support for this
+    // BUGBUG: currently don't have support for this with API Permissions
     public static void unlikeMediaRoute(final Context context, String mediaID, String accessToken) {
         String baseUrl = "https://api.instagram.com/v1/media/" + mediaID + "/likes?access_token=" + accessToken;
         AsyncHttpClient client = new AsyncHttpClient();
@@ -74,7 +73,7 @@ public class InstagramGateway {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(context, "Failure: No Communication With Database", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Failure: No Communication With Database", Toast.LENGTH_SHORT).show();
             }
         });
     }

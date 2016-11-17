@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageStreamActivity extends AppCompatActivity {
-    private String accessToken;
+    public String accessToken;
     public ArrayList<IGPost> igPosts;
     public PostsAdapter postsAdapter;
     private ProgressBar pb;
@@ -36,6 +36,7 @@ public class ImageStreamActivity extends AppCompatActivity {
 
         pb = (ProgressBar) findViewById(R.id.pbLoading);
         showProgressBar();
+        accessToken = getAccessToken();
 
         bindAdapterView();
         getIGPostDataAPI();
@@ -51,8 +52,6 @@ public class ImageStreamActivity extends AppCompatActivity {
     }
 
     public void getIGPostDataAPI() {
-        accessToken = getAccessToken();
-
         InstagramGateway.getMediaRoute(accessToken, new InstagramGateway.ImageSearchListener() {
             @Override
             public void done(JSONObject response) {

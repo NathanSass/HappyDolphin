@@ -1,9 +1,7 @@
 package com.nathansass.happydolphin.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nathansass.happydolphin.R;
+import com.nathansass.happydolphin.activities.ImageStreamActivity;
 import com.nathansass.happydolphin.models.IGPost;
 import com.nathansass.happydolphin.network.InstagramGateway;
 import com.nathansass.happydolphin.util.CircleTransform;
@@ -57,9 +56,8 @@ public class PostsAdapter extends
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
                 IGPost igPost = igPosts.get(position);
-                SharedPreferences pref =
-                        PreferenceManager.getDefaultSharedPreferences(getContext()); //TODO: put this in a shared function
-                String accessToken = pref.getString(R.string.access_token + "", "n/a");
+
+                String accessToken = ((ImageStreamActivity) getContext()).accessToken;
 
                 Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(75);

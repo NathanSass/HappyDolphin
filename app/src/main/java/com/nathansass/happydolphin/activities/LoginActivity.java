@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             pref = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor edit = pref.edit();
             edit.putString(R.string.access_token + "", accessToken);
-            edit.commit();
+            edit.commit(); // use .apply() for async
 
             Intent i = new Intent(this, ImageStreamActivity.class);
             startActivity(i);
