@@ -23,16 +23,16 @@ ActiveAndroid
   - ActiveAndroid is an easy to use ORM that will allow me to save the last loaded posts to the device and then show them while the user is waiting for the newest posts to load.
   - Also helps me manage screen rotations.
   
- Picasso
+Picasso
    - Makes downloading, caching and displaying images from the web easier.
    - Small library and easy to use API.
    
- Next Steps:
+Next Steps:
  - I have the method calls stubbed out for liking / unliking a photo but my current API permissions do not allow me to interact with the API in that way.
  - I would also add a search if the api allowed it.
  - Consider not making the user login every time. If there is an access_token in shared preferences, the user could go straight into the app without generating a new token.
  
- Cool features:
+Cool features:
  - Phone vibrates when a photo is liked.
  - Has a placeholder image for images before they load.
  - Circular profile picture above posts.
